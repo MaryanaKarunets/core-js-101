@@ -1,420 +1,523 @@
-/* *************************************************************************************************
- *                                                                                                *
- * Please read the following tutorial before implementing tasks:                                   *
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling  *
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration              *
- *                                                                                                *
- ************************************************************************************************ */
-
+/* *******************************************************************************************
+ *                                                                                           *
+ * Please read the following tutorial before implementing tasks:                             *
+ * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Looping_code    *
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration         *
+ * https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/conditionals    *
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/if...else    *
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch       *
+ *                                                                                           *
+ ******************************************************************************************* */
 
 /**
- * Returns the 'Fizz','Buzz' or an original number using the following rules:
- * 1) return original number
- * 2) but if number multiples of three return 'Fizz'
- * 3) for the multiples of five return 'Buzz'
- * 4) for numbers which are multiples of both three and five return 'FizzBuzz'
+ * Determines whether a given number is positive. Zero is considered positive.
+ * This function does not use Number or Math class methods.
  *
- * @param {number} num
- * @return {any}
+ * @param {number} number - The number to check.
+ * @return {boolean} True if the number is positive or zero, false otherwise.
+ *
+ * @example:
+ *  10 => true
+ *  0  => true
+ *  -5 => false
+ */
+function isPositive(number) {
+  return number >= 0;
+}
+
+/**
+ * Returns the maximum of three numbers without using Array and Math classes methods.
+ *
+ * @param {number} a - The first number.
+ * @param {number} b - The second number.
+ * @param {number} c - The third number.
+ * @return {number} The maximum of the three numbers.
+ *
+ * @example:
+ *  1, 2, 3       => 3
+ *  -5, 0, 5      => 5
+ *  -0.1, 0, 0.2  => 0.2
+ */
+function getMaxNumber(a, b, c) {
+  let result;
+  if (a > b) {
+    if (a > c) {
+      result = a;
+    } else {
+      result = c;
+    }
+  } else if (b > c) {
+    result = b;
+  } else {
+    result = c;
+  }
+  return result;
+}
+
+/**
+ * Checks if a queen can capture a king in the next move on an 8x8 chessboard.
+ * See more details at https://en.wikipedia.org/wiki/Queen_(chess)
+ *
+ * @typedef {{
+ *  x: number,
+ *  y: number
+ * }} Position
+ * @param {Object} queen - The position of the queen.
+ * @param {Object} king - The position of the king.
+ * @return {boolean} True if the queen can capture the king, false otherwise.
  *
  * @example
- *   2 =>  2
- *   3 => 'Fizz'
- *   5 => 'Buzz'
- *   4 => 4
- *  15 => 'FizzBuzz'
- *  20 => 'Buzz'
- *  21 => 'Fizz'
- *
+ * {x: 1, y: 1}, {x: 5, y: 5} => true
+ * {x: 2, y: 1}, {x: 2, y: 8} => true
+ * {x: 1, y: 1}, {x: 2, y: 8} => false
+ * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function getFizzBuzz(/* num */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  if (queen.x === king.x) {
+    return true;
+  }
+  if (queen.y === king.y) {
+    return true;
+  }
+  if (Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)) {
+    return true;
+  }
+  return false;
 }
 
-
 /**
- * Returns the factorial of the specified integer n.
+ * Determines whether a triangle is isosceles based on its side lengths.
+ * In this task, the use of methods of the String and Array classes is not allowed.
  *
- * @param {number} n
- * @return {number}
+ * @param {number} a - The length of the first side.
+ * @param {number} b - The length of the second side.
+ * @param {number} c - The length of the third side.
+ * @return {boolean} True if the triangle is isosceles, false otherwise.
  *
  * @example:
- *   1  => 1
- *   5  => 120
- *   10 => 3628800
+ *  1, 2, 3   => false
+ *  3, 1, 2   => false
+ *  2, 3, 2   => true
+ *  3, 2, 2   => true
+ *  2, 2, 3   => true
+ *  2, 2, 5   => false
+ *  3, 0, 3   => false
  */
-function getFactorial(/* n */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a + b <= c || a + c <= b || b + c <= a) {
+    return false;
+  }
+  if (a === b || b === c || a === c) {
+    return true;
+  }
+  return true;
 }
 
-
 /**
- * Returns the sum of integer numbers between n1 and n2 (inclusive).
+ * Converts a number to Roman numerals. The number will be between 1 and 39.
+ * In this task, the use of methods of the String and Array classes is not allowed.
  *
- * @param {number} n1
- * @param {number} n2
- * @return {number}
+ * @param {number} num - The number to convert.
+ * @return {string} The Roman numeral representation of the number.
  *
  * @example:
- *   1,2   =>  3  ( = 1+2 )
- *   5,10  =>  45 ( = 5+6+7+8+9+10 )
- *   -1,1  =>  0  ( = -1 + 0 + 1 )
+ *  1   => I
+ *  2   => II
+ *  5   => V
+ *  10  => X
+ *  26  => XXVI
  */
-function getSumBetweenNumbers(/* n1, n2 */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  let roman;
+  const tenths = Math.floor(num / 10);
+  const units = num % 10;
+  const arr = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
+  if (tenths === 3) {
+    roman = 'XXX';
+  } else if (tenths === 2) {
+    roman = 'XX';
+  } else if (tenths === 1) {
+    roman = 'X';
+  } else {
+    roman = '';
+  }
+  return roman + arr[units];
 }
 
-
 /**
- * Returns true, if a triangle can be built with the specified sides a, b, c
- * and false in any other ways.
+ * Converts a number to a string, replacing digits with words.
+ * In this task, the use of methods of the String and Array classes is not allowed.
  *
- * @param {number} a
- * @param {number} b
- * @param {number} c
- * @return {bool}
+ * @param {string} numberStr - The number as a string.
+ * @return {string} The number with digits replaced by words.
  *
  * @example:
- *   1,2,3    =>  false
- *   3,4,5    =>  true
- *   10,1,1   =>  false
- *   10,10,10 =>  true
+ *  '1'       => 'one'
+ *  '10'      => 'one zero'
+ *  '-10'     => 'minus one zero'
+ *  '10.5'    => 'one zero point five'
+ *  '10,5'    => 'one zero point five'
+ *  '1950.2'  => 'one nine five zero point two'
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let result = '';
+  for (let i = 0; i < numberStr.length; i += 1) {
+    if (i !== 0) {
+      result += ' ';
+    }
+    switch (numberStr[i]) {
+      case '0':
+        result += 'zero';
+        break;
+      case '1':
+        result += 'one';
+        break;
+      case '2':
+        result += 'two';
+        break;
+      case '3':
+        result += 'three';
+        break;
+      case '4':
+        result += 'four';
+        break;
+      case '5':
+        result += 'five';
+        break;
+      case '6':
+        result += 'six';
+        break;
+      case '7':
+        result += 'seven';
+        break;
+      case '8':
+        result += 'eight';
+        break;
+      case '9':
+        result += 'nine';
+        break;
+      case '-':
+        result += 'minus';
+        break;
+      case '.':
+        result += 'point';
+        break;
+      case ',':
+        result += 'point';
+        break;
+      default:
+        result += '';
+    }
+  }
+  return result;
 }
 
-
 /**
- * Returns true, if two specified axis-aligned rectangles overlap, otherwise false.
- * Each rectangle representing by object
- *  {
- *     top: 5,
- *     left: 5,
- *     width: 20,
- *     height: 10
- *  }
+ * Determines whether a string is a palindrome.
+ * In this task, the use of methods of the String and Array classes is not allowed.
  *
- *  (5;5)
- *     -------------
- *     |           |
- *     |           |  height = 10
- *     -------------
- *        width=20
- *
- * NOTE: Please use canvas coordinate space (https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Drawing_shapes#The_grid),
- * it differs from Cartesian coordinate system.
- *
- * @param {object} rect1
- * @param {object} rect2
- * @return {bool}
+ * @param {string} str - The string to check.
+ * @return {boolean} True if the string is a palindrome, false otherwise.
  *
  * @example:
- *   { top: 0, left: 0, width: 10, height: 10 },
- *   { top: 5, left: 5, width: 20, height: 20 }    =>  true
- *
- *   { top: 0, left: 0, width: 10, height: 10 },
- *   { top:20, left:20, width: 20, height: 20 }    =>  false
- *
+ *  'abcba'     => true
+ *  '0123210'   => true
+ *  'qweqwe'    => false
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  for (let i = 0; i < str.length / 2; i += 1) {
+    if (str[i] !== str[str.length - 1 - i]) {
+      return false;
+    }
+  }
+  return true;
 }
 
-
 /**
- * Returns true, if point lies inside the circle, otherwise false.
- * Circle is an object of
- *  {
- *     center: {
- *       x: 5,
- *       y: 5
- *     },
- *     radius: 20
- *  }
+ * Finds the first occurrence of a letter in a string.
+ * In this task, the use of methods of the String and Array classes is not allowed.
  *
- * Point is object of
- *  {
- *     x: 5,
- *     y: 5
- *  }
- *
- * @param {object} circle
- * @param {object} point
- * @return {bool}
+ * @param {string} str - The string to search.
+ * @param {string} letter - The letter to find.
+ * @return {number} The index of the first occurrence of the letter, or -1 if not found.
  *
  * @example:
- *   { center: { x:0, y:0 }, radius:10 },  { x:0, y:0 }     => true
- *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
- *
+ *  'qwerty', 'q'     => 0
+ *  'qwerty', 'е'     => 4
+ *  'qwerty', 'Q'     => -1
+ *  'qwerty', 'p'     => -1
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      return i;
+    }
+  }
+  return -1;
 }
 
-
 /**
- * Returns the first non repeated char in the specified strings otherwise returns null.
+ * Checks if a number contains a specific digit.
+ * In this task, the use of methods of the String and Array classes is not allowed.
  *
- * @param {string} str
- * @return {string}
+ * @param {number} num - The number to check.
+ * @param {number} digit - The digit to search for.
+ * @return {boolean} True if the number contains the digit, false otherwise.
  *
  * @example:
- *   'The quick brown fox jumps over the lazy dog' => 'T'
- *   'abracadabra'  => 'c'
- *   'entente' => null
+ *  123450, 5   => true
+ *  123450, 1   => true
+ *  123450, 0   => true
+ *  12345, 0    => false
+ *  12345, 6    => false
  */
-function findFirstSingleChar(/* str */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  const str = String(num);
+  const letter = String(digit);
+  for (let i = 0; i < str.length; i += 1) {
+    if (str[i] === letter) {
+      return true;
+    }
+  }
+  return false;
 }
 
-
 /**
- * Returns the string representation of math interval,
- * specified by two points and include / exclude flags.
- * See the details: https://en.wikipedia.org/wiki/Interval_(mathematics)
+ * Finds the index of an element in an array where the sum of elements to the left equals the sum of elements to the right.
+ * If such an index does not return -1.
+ * In this task, the use of methods of the Array and String classes is not allowed.
  *
- * Please take attention, that the smaller number should be the first in the notation
- *
- * @param {number} a
- * @param {number} b
- * @param {bool} isStartIncluded
- * @param {bool} isEndIncluded
- * @return {string}
- *
- * @example
- *   0, 1, true, true   => '[0, 1]'
- *   0, 1, true, false  => '[0, 1)'
- *   0, 1, false, true  => '(0, 1]'
- *   0, 1, false, false => '(0, 1)'
- * Smaller number has to be first :
- *   5, 3, true, true   => '[3, 5]'
- *
- */
-function getIntervalString(/* a, b, isStartIncluded, isEndIncluded */) {
-  throw new Error('Not implemented');
-}
-
-
-/**
- * Reverse the specified string (put all chars in reverse order)
- *
- * @param {string} str
- * @return {string}
+ * @param {number[]} arr - The array to check.
+ * @return {number} The index of the balance point, or -1 if none exists.
  *
  * @example:
- * 'The quick brown fox jumps over the lazy dog' => 'god yzal eht revo spmuj xof nworb kciuq ehT'
- * 'abracadabra' => 'arbadacarba'
- * 'rotator' => 'rotator'
- * 'noon' => 'noon'
+ *  [1, 2, 5, 3, 0] => 2    => 1 + 2 === 3 + 0 then balance element is 5 and its index = 2
+ *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
+ *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function reverseString(/* str */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  let leftSum = 0;
+  let rightSum = 0;
+  for (let i = 0; i < arr.length; i += 1) {
+    rightSum += arr[i];
+  }
+  for (let i = 0; i < arr.length; i += 1) {
+    rightSum -= arr[i];
+    if (leftSum === rightSum) {
+      return i;
+    }
+    leftSum += arr[i];
+  }
+  return -1;
 }
 
-
 /**
- * Reverse the specified integer number (put all digits in reverse order)
+ * Generates a spiral matrix of a given size, filled with numbers in ascending order starting from one.
+ * The direction of filling with numbers is clockwise.
+ * Usage of String and Array classes methods is not allowed in this task.
  *
- * @param {number} num
- * @return {number}
+ * @param {number} size - The size of the matrix.
+ * @return {number[][]} The spiral matrix.
  *
  * @example:
- *   12345 => 54321
- *   1111  => 1111
- *   87354 => 45378
- *   34143 => 34143
+ *        [
+ *          [1, 2, 3],
+ *  3  =>   [8, 9, 4],
+ *          [7, 6, 5]
+ *        ]
+ *        [
+ *          [1,  2,  3,  4],
+ *  4  =>   [12, 13, 14, 5],
+ *          [11, 16, 15, 6],
+ *          [10, 9,  8,  7]
+ *        ]
  */
-function reverseInteger(/* num */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const matrix = [];
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = [];
+    for (let j = 0; j < size; j += 1) {
+      matrix[i][j] = 0;
+    }
+  }
+
+  let value = 1;
+  let top = 0;
+  let bottom = size - 1;
+  let left = 0;
+  let right = size - 1;
+
+  while (top <= bottom && left <= right) {
+    for (let i = top; i <= bottom; i += 1) {
+      matrix[left][i] = value;
+      value += 1;
+    }
+    left += 1;
+
+    for (let i = left; i <= right; i += 1) {
+      matrix[i][bottom] = value;
+      value += 1;
+    }
+    bottom -= 1;
+
+    if (left <= right) {
+      for (let i = bottom; i >= top; i -= 1) {
+        matrix[right][i] = value;
+        value += 1;
+      }
+      right -= 1;
+    }
+
+    if (top <= bottom) {
+      for (let i = right; i >= left; i -= 1) {
+        matrix[i][top] = value;
+        value += 1;
+      }
+      top += 1;
+    }
+  }
+
+  return matrix;
 }
 
-
 /**
- * Validates the CCN (credit card number) and return true if CCN is valid
- * and false otherwise.
+ * Rotates a matrix by 90 degrees clockwise in place.
+ * Take into account that the matrix size can be very large. Consider how you can optimize your solution.
+ * Usage of String and Array class methods is not allowed in this task.
  *
- * See algorithm here : https://en.wikipedia.org/wiki/Luhn_algorithm
- *
- * @param {number} cnn
- * @return {boolean}
+ * @param {number[][]} matrix - The matrix to rotate.
+ * @return {number[][]} The rotated matrix.
  *
  * @example:
- *   79927398713      => true
- *   4012888888881881 => true
- *   5123456789012346 => true
- *   378282246310005  => true
- *   371449635398431  => true
- *
- *   4571234567890111 => false
- *   5436468789016589 => false
- *   4916123456789012 => false
+ *  [                 [
+ *    [1, 2, 3],        [7, 4, 1],
+ *    [4, 5, 6],  =>    [8, 5, 2],
+ *    [7, 8, 9]         [9, 6, 3]
+ *  ]                 ]
  */
-function isCreditCardNumber(/* ccn */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const row = matrix.length;
+  const resultArr = matrix;
+  for (let i = 0; i < Math.floor(row / 2); i += 1) {
+    for (let j = i; j < row - i - 1; j += 1) {
+      const x = resultArr[i][j];
+      resultArr[i][j] = matrix[row - 1 - j][i];
+      resultArr[row - 1 - j][i] = matrix[row - 1 - i][row - 1 - j];
+      resultArr[row - 1 - i][row - 1 - j] = matrix[j][row - 1 - i];
+      resultArr[j][row - 1 - i] = x;
+    }
+  }
+  return resultArr;
 }
 
 /**
- * Returns the digital root of integer:
- *   step1 : find sum of all digits
- *   step2 : if sum > 9 then goto step1 otherwise return the sum
+ * Sorts an array of numbers in ascending order in place.
+ * Employ any sorting algorithm of your choice.
+ * Take into account that the array can be very large. Consider how you can optimize your solution.
+ * In this task, the use of methods of the Array and String classes is not allowed.
  *
- * @param {number} n
- * @return {number}
+ * @param {number[]} arr - The array to sort.
+ * @return {number[]} The sorted array.
  *
  * @example:
- *   12345 ( 1+2+3+4+5 = 15, 1+5 = 6) => 6
- *   23456 ( 2+3+4+5+6 = 20, 2+0 = 2) => 2
- *   10000 ( 1+0+0+0+0 = 1 ) => 1
- *   165536 (1+6+5+5+3+6 = 26,  2+6 = 8) => 8
+ *  [2, 9, 5]       => [2, 5, 9]
+ *  [2, 9, 5, 9]    => [2, 5, 9, 9]
+ *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function getDigitalRoot(/* num */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const curArr = arr;
+
+  function quickSort(start, end) {
+    if (start < end) {
+      const current = curArr[end];
+      let pos = start;
+      for (let j = start; j <= end - 1; j += 1) {
+        if (curArr[j] <= current) {
+          [curArr[pos], curArr[j]] = [curArr[j], curArr[pos]];
+          pos += 1;
+        }
+      }
+      [curArr[pos], curArr[end]] = [curArr[end], curArr[pos]];
+
+      quickSort(start, pos - 1);
+      quickSort(pos + 1, end);
+    }
+  }
+  quickSort(0, curArr.length - 1);
+  return curArr;
 }
 
-
 /**
- * Returns true if the specified string has the balanced brackets and false otherwise.
- * Balanced means that is, whether it consists entirely of pairs of opening/closing brackets
- * (in that order), none of which mis-nest.
- * Brackets include [],(),{},<>
+ * Shuffles characters in a string so that the characters with an odd index are moved to the end of the string at each iteration.
+ * Take into account that the string can be very long and the number of iterations is large. Consider how you can optimize your solution.
+ * Usage of Array class methods is not allowed in this task.
  *
- * @param {string} str
- * @return {boolean}
+ * @param {string} str - The string to shuffle.
+ * @param {number} iterations - The number of iterations to perform the shuffle.
+ * @return {string} The shuffled string.
  *
  * @example:
- *   '' => true
- *   '[]'  => true
- *   '{}'  => true
- *   '()   => true
- *   '[[]' => false
- *   ']['  => false
- *   '[[][][[]]]' => true
- *   '[[][]][' => false
- *   '{)' = false
- *   '{[(<{[]}>)]}' = true
+ *  '012345', 1 => '024135'
+ *  'qwerty', 1 => 'qetwry'
+ *  '012345', 2 => '024135' => '043215'
+ *  'qwerty', 2 => 'qetwry' => 'qtrewy'
+ *  '012345', 3 => '024135' => '043215' => '031425'
+ *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function isBracketsBalanced(/* str */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  let count = iterations;
+  let result = str;
+  while (count > 0) {
+    let even = '';
+    let odd = '';
+    for (let i = 0; i < result.length; i += 2) {
+      even += result[i];
+      odd += result[i + 1];
+    }
+    result = even + odd;
+    count -= 1;
+    if (result === str) {
+      count %= iterations - count;
+    }
+  }
+  return result;
 }
 
-
 /**
- * Returns the string with n-ary (binary, ternary, etc, where n <= 10)
- * representation of specified number.
- * See more about
- * https://en.wikipedia.org/wiki/Binary_number
- * https://en.wikipedia.org/wiki/Ternary_numeral_system
- * https://en.wikipedia.org/wiki/Radix
- *
- * @param {number} num
- * @param {number} n, radix of the result
- * @return {string}
+ * Returns the nearest largest integer consisting of the digits of the given positive integer.
+ * If there is no such number, it returns the original number.
+ * Usage of String class methods is not allowed in this task.
  *
  * @example:
- *   1024, 2  => '10000000000'
- *   6561, 3  => '100000000'
- *    365, 2  => '101101101'
- *    365, 3  => '111112'
- *    365, 4  => '11231'
- *    365, 10 => '365'
+ * 12345    => 12354
+ * 123450   => 123504
+ * 12344    => 12434
+ * 123440   => 124034
+ * 1203450  => 1203504
+ * 90822    => 92028
+ * 321321   => 322113
+ *
+ * @param {number} number The source number
+ * @returns {number} The nearest larger number, or original number if none exists.
  */
-function toNaryString(/* num, n */) {
+function getNearestBigger(/* number */) {
   throw new Error('Not implemented');
 }
-
-
-/**
- * Returns the common directory path for specified array of full filenames.
- *
- * @param {array} pathes
- * @return {string}
- *
- * @example:
- *   ['/web/images/image1.png', '/web/images/image2.png']  => '/web/images/'
- *   ['/web/assets/style.css', '/web/scripts/app.js',  'home/setting.conf'] => ''
- *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
- *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
- */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
-}
-
-
-/**
- * Returns the product of two specified matrixes.
- * See details: https://en.wikipedia.org/wiki/Matrix_multiplication
- *
- * @param {array} m1
- * @param {array} m2
- * @return {array}
- *
- * @example:
- *   [[ 1, 0, 0 ],       [[ 1, 2, 3 ],           [[ 1, 2, 3 ],
- *    [ 0, 1, 0 ],   X    [ 4, 5, 6 ],     =>     [ 4, 5, 6 ],
- *    [ 0, 0, 1 ]]        [ 7, 8, 9 ]]            [ 7, 8, 9 ]]
- *
- *                        [[ 4 ],
- *   [[ 1, 2, 3]]    X     [ 5 ],          =>     [[ 32 ]]
- *                         [ 6 ]]
- *
- */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
-}
-
-
-/**
- * Returns the evaluation of the specified tic-tac-toe position.
- * See the details: https://en.wikipedia.org/wiki/Tic-tac-toe
- *
- * Position is provides as 3x3 array with the following values: 'X','0', undefined
- * Function should return who is winner in the current position according to the game rules.
- * The result can be: 'X','0',undefined
- *
- * @param {array} position
- * @return {string}
- *
- * @example
- *
- *   [[ 'X',   ,'0' ],
- *    [    ,'X','0' ],       =>  'X'
- *    [    ,   ,'X' ]]
- *
- *   [[ '0','0','0' ],
- *    [    ,'X',    ],       =>  '0'
- *    [ 'X',   ,'X' ]]
- *
- *   [[ '0','X','0' ],
- *    [    ,'X',    ],       =>  undefined
- *    [ 'X','0','X' ]]
- *
- *   [[    ,   ,    ],
- *    [    ,   ,    ],       =>  undefined
- *    [    ,   ,    ]]
- *
- */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
-}
-
 
 module.exports = {
-  getFizzBuzz,
-  getFactorial,
-  getSumBetweenNumbers,
-  isTriangle,
-  doRectanglesOverlap,
-  isInsideCircle,
-  findFirstSingleChar,
-  getIntervalString,
-  reverseString,
-  reverseInteger,
-  isCreditCardNumber,
-  getDigitalRoot,
-  isBracketsBalanced,
-  toNaryString,
-  getCommonDirectoryPath,
-  getMatrixProduct,
-  evaluateTicTacToePosition,
+  isPositive,
+  getMaxNumber,
+  canQueenCaptureKing,
+  isIsoscelesTriangle,
+  convertToRomanNumerals,
+  convertNumberToString,
+  isPalindrome,
+  getIndexOf,
+  isContainNumber,
+  getBalanceIndex,
+  getSpiralMatrix,
+  rotateMatrix,
+  sortByAsc,
+  shuffleChar,
+  getNearestBigger,
 };
